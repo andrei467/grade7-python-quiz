@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💪 Python Grade 7 Quiz – Fitness & Health</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green: #39d98a;
+      --green-dark: #22a86a;
+      --green-bg: #0a1f14;
+      --black: #080c09;
+      --dark: #0f1410;
+      --card: #131a14;
+      --card2: #161e17;
+      --border: #1e2e20;
+      --text: #ddeedd;
+      --muted: #6a8a6e;
+      --accent: #f59e0b;
+      --mono: 'DM Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Top bar */
+    .topbar {
+      background: var(--green);
+      height: 8px;
+    }
+
+    header {
+      background: linear-gradient(150deg, #0a1f14 0%, #080c09 70%);
+      border-bottom: 1px solid var(--border);
+      padding: 44px 0 34px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '💪';
+      font-size: 200px;
+      position: absolute;
+      top: -30px;
+      right: -10px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .header-tag {
+      display: inline-block;
+      background: var(--green);
+      color: var(--black);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(36px, 7vw, 68px);
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    header h1 span { color: var(--green); }
+
+    .header-sub {
+      color: var(--muted);
+      font-size: 13.5px;
+      letter-spacing: 1px;
+    }
+
+    .meta-bar {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 26px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .meta-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .meta-divider {
+      width: 1px;
+      height: 38px;
+      background: var(--border);
+      align-self: center;
+    }
+
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 44px 22px 72px;
+    }
+
+    .instructions {
+      border: 1px solid var(--green-dark);
+      background: var(--green-bg);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      font-size: 13.5px;
+      color: #aaccaa;
+    }
+
+    .instructions strong { color: var(--green); }
+
+    /* Cards */
+    .question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-card:nth-child(1) { animation-delay: 0.05s; }
+    .question-card:nth-child(2) { animation-delay: 0.1s; }
+    .question-card:nth-child(3) { animation-delay: 0.15s; }
+    .question-card:nth-child(4) { animation-delay: 0.2s; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: var(--card2);
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .q-number {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .q-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .marks-badge {
+      background: var(--green);
+      color: var(--black);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-body {
+      padding: 20px 20px 24px;
+    }
+
+    .scenario {
+      background: #0c180d;
+      border-left: 3px solid var(--green);
+      padding: 11px 15px;
+      border-radius: 0 4px 4px 0;
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: #99bb99;
+      font-style: italic;
+    }
+
+    .task {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 15px;
+      align-items: flex-start;
+    }
+
+    .task:last-child { margin-bottom: 0; }
+
+    .task-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--green);
+      background: #0d2016;
+      border: 1px solid #1a4028;
+      border-radius: 4px;
+      padding: 2px 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .task-content {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .task-marks {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .code-inline {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      background: #1a2a1a;
+      padding: 1px 6px;
+      border-radius: 3px;
+      color: #7ddc9a;
+    }
+
+    .code-block {
+      background: #0a0f0a;
+      border: 1px solid #1e2e1e;
+      border-radius: 6px;
+      padding: 12px 15px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: #7ddc9a;
+      margin: 10px 0 4px;
+      white-space: pre;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+
+    .output-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 10px 0 4px;
+    }
+
+    .output-block {
+      background: #091508;
+      border: 1px solid #1a3a1a;
+      border-radius: 6px;
+      padding: 11px 15px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: #5ec87e;
+      white-space: pre;
+    }
+
+    .task-list {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+    }
+
+    .task-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #131f14;
+    }
+
+    .task-list li:last-child { border-bottom: none; }
+
+    .task-list li::before {
+      content: '▸';
+      color: var(--green);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .li-marks {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .part-divider {
+      border: none;
+      border-top: 1px dashed var(--border);
+      margin: 20px 0;
+    }
+
+    .part-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .part-label::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .var-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .var-table th {
+      background: #111a12;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .var-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .var-table tr:nth-child(even) td { background: #0f160f; }
+
+    .type-tag {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      padding: 1px 7px;
+      border-radius: 3px;
+      background: #1a1a2e;
+      color: #7b9fff;
+      border: 1px solid #2a2a4a;
+    }
+
+    .type-tag.str  { background: #0d2016; color: #7ddc9a; border-color: #1a4028; }
+    .type-tag.float { background: #2a1a0d; color: #e0a87e; border-color: #4a2a10; }
+    .type-tag.bool { background: #2a1a2a; color: #d07ed0; border-color: #3a1e3a; }
+
+    .hl { color: var(--green); font-weight: 500; }
+
+    .answer-area {
+      border: 1px dashed #1e2e1e;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-top: 16px;
+      min-height: 100px;
+      background: #0a0f0a;
+      position: relative;
+    }
+
+    .answer-area::after {
+      content: 'Write your answer here';
+      position: absolute;
+      top: 14px;
+      left: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #1e2e1e;
+      pointer-events: none;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 9px 20px 12px;
+      border-top: 1px solid var(--border);
+      background: #0f140f;
+    }
+
+    .score-line {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .score-line span { color: var(--green); font-size: 14px; }
+
+    .total-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--green);
+      color: var(--black);
+      border-radius: 8px;
+      padding: 18px 26px;
+      margin-top: 10px;
+    }
+
+    .total-bar-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .total-bar-marks {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      font-size: 12px;
+      color: #1e2e1e;
+      font-family: var(--mono);
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      header { background: #fff; border-bottom: 2px solid #000; }
+      header h1, .q-title { color: #000; }
+      header h1 span { color: #22a86a; }
+      .marks-badge { background: #000; color: #fff; }
+      .question-card { border: 1px solid #ccc; break-inside: avoid; }
+      .card-header { background: #f5f5f5; }
+      .answer-area { border: 1px dashed #999; min-height: 110px; }
+      .code-block, .output-block { background: #f5f5f5; color: #000; border: 1px solid #ccc; }
+      .scenario { background: #f9f9f9; }
+      .total-bar { background: #000; color: #fff; }
+      footer { display: none; }
+      .topbar { display: none; }
+    }
+
+    @media (max-width: 580px) {
+      .meta-divider { display: none; }
+      .card-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<header>
+  <div class="header-tag">Grade 7 · Python Quiz Assessment</div>
+  <h1>Python Practical Quiz<br/><span>💪 Fitness & Health</span></h1>
+  <p class="header-sub">Write your code clearly. Every mark counts.</p>
+  <div class="meta-bar">
+    <div class="meta-item">
+      <div class="meta-value">50</div>
+      <div class="meta-label">Total Marks</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <div class="meta-value">45</div>
+      <div class="meta-label">Minutes</div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <div class="meta-value">4</div>
+      <div class="meta-label">Questions</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="instructions">
+    <strong>Instructions:</strong> Write Python code to answer each question using Thonny or the online Python Compiler. Use correct syntax, variable names, and operators as taught in class. Show all your work — partial marks may be awarded.
+  </div>
+
+  <!-- Q1 -->
+  <div class="question-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="q-number">Q 01</span>
+        <span class="q-title">Variables &amp; Data Types</span>
+      </div>
+      <span class="marks-badge">10 marks</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario">🏋️ You are building a fitness profile for a gym app.</p>
+
+      <div class="task">
+        <span class="task-label">a)</span>
+        <div class="task-content">
+          Create the following variables and assign them values of your choice:
+          <table class="var-table">
+            <thead>
+              <tr><th>Variable</th><th>Type</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="code-inline">athlete_name</span></td><td><span class="type-tag str">string</span></td><td>Name of the athlete</td></tr>
+              <tr><td><span class="code-inline">weight_kg</span></td><td><span class="type-tag float">float</span></td><td>Weight in kilograms</td></tr>
+              <tr><td><span class="code-inline">age</span></td><td><span class="type-tag">integer</span></td><td>Athlete's age</td></tr>
+              <tr><td><span class="code-inline">is_member</span></td><td><span class="type-tag bool">boolean</span></td><td>Gym membership status</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="task-marks">4 marks</span>
+      </div>
+
+      <div class="task">
+        <span class="task-label">b)</span>
+        <div class="task-content">Print each of the 4 variables on a separate line.</div>
+        <span class="task-marks">3 marks</span>
+      </div>
+
+      <div class="task">
+        <span class="task-label">c)</span>
+        <div class="task-content">
+          Use <strong>string concatenation</strong> to print the sentence below. Use your variables — do not hardcode the values.
+          <div class="output-label">Expected output:</div>
+          <div class="output-block">[athlete_name] is [age] years old and weighs [weight_kg] kg.</div>
+        </div>
+        <span class="task-marks">3 marks</span>
+      </div>
+
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="q-number">Q 02</span>
+        <span class="q-title">Arithmetic Operators</span>
+      </div>
+      <span class="marks-badge">10 marks</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario">🏃 A fitness tracker records your daily workouts.</p>
+
+      <ul class="task-list">
+        <li>
+          <span><strong>a)</strong> A student runs <strong>3 laps</strong> of <strong>400 metres</strong> each. Create a variable <span class="code-inline">total_distance</span>, calculate the total distance, and print it.</span>
+          <span class="li-marks">2 marks</span>
+        </li>
+        <li>
+          <span><strong>b)</strong> Use <span class="code-inline">+=</span> to add an extra <strong>200 metres</strong> cool-down walk to <span class="code-inline">total_distance</span>. Print the new total.</span>
+          <span class="li-marks">2 marks</span>
+        </li>
+        <li>
+          <span><strong>c)</strong> A gym session lasts <strong>75 minutes</strong>. Use <span class="code-inline">%</span> to find how many minutes are left over after splitting the session into <strong>20-minute</strong> blocks. Print it.</span>
+          <span class="li-marks">3 marks</span>
+        </li>
+        <li>
+          <span><strong>d)</strong> A trainer does <strong>2⁴</strong> push-ups per set. Use <span class="code-inline">**</span> to calculate this and print: <span class="code-inline">"Push-ups per set: [result]"</span> — use a variable, not the number directly.</span>
+          <span class="li-marks">3 marks</span>
+        </li>
+      </ul>
+
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="q-number">Q 03</span>
+        <span class="q-title">if / elif / else &amp; Logical Operators</span>
+      </div>
+      <span class="marks-badge">15 marks</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario">📊 A fitness app gives feedback based on workout stats.</p>
+
+      <div class="part-label">Part A — Fitness Level Checker</div>
+      <p style="font-size:14px; margin-bottom:10px;">Create a variable <span class="code-inline">student_pushups</span>. Assign the number of <strong>push-ups</strong> a student can do to this variable. Use <span class="code-inline">if / elif / else</span> to print:</p>
+      <ul class="task-list">
+        <li><span>50 or more → print <span class="hl">"Elite Athlete!"</span></span><span class="li-marks">2 marks</span></li>
+        <li><span>30 or more → print <span class="hl">"Great Shape!"</span></span><span class="li-marks">2 marks</span></li>
+        <li><span>10 or more → print <span class="hl">"Keep Training!"</span></span><span class="li-marks">2 marks</span></li>
+        <li><span>Below 10 → print <span class="hl">"Just Getting Started!"</span></span><span class="li-marks">2 marks</span></li>
+      </ul>
+
+      <hr class="part-divider"/>
+
+      <div class="part-label">Part B — Workout Recommender</div>
+      <p style="font-size:14px; margin-bottom:10px;">Store these variables exactly as shown: <span style="font-family:var(--mono);font-size:11px;color:var(--accent);">3 marks</span></p>
+      <div class="code-block">is_warmed_up = True
+has_equipment = False
+energy_level = 7</div>
+
+      <p style="font-size:14px; margin: 12px 0 8px;">Write <strong>separate if statements</strong> to print:</p>
+      <ul class="task-list">
+        <li><span><span class="hl">"Ready to lift!"</span> → if is_warmed_up <strong>AND</strong> energy_level > 6</span><span class="li-marks">2 marks</span></li>
+        <li><span><span class="hl">"Try a home workout!"</span> → if <strong>NOT</strong> has_equipment and energy_level > 4</span><span class="li-marks">2 marks</span></li>
+      </ul>
+
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question-card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="q-number">Q 04</span>
+        <span class="q-title">Lists</span>
+      </div>
+      <span class="marks-badge">15 marks</span>
+    </div>
+    <div class="card-body">
+      <p class="scenario">📋 You are building a workout planner that tracks exercises.</p>
+
+      <ul class="task-list">
+        <li>
+          <span><strong>a)</strong> Create a list called <span class="code-inline">workout</span> with <strong>4 exercises</strong> of your choice (e.g. "push-ups, burpees, pull-ups, crunches"). Print it.</span>
+          <span class="li-marks">3 marks</span>
+        </li>
+        <li>
+          <span><strong>b)</strong> Using <strong>indexing</strong>, print the <strong>first</strong> and <strong>last</strong> exercise on separate lines.</span>
+          <span class="li-marks">2 marks</span>
+        </li>
+        <li>
+          <span><strong>c)</strong> Use <span class="code-inline">.append()</span> to add <strong>"dips"</strong> to the list. Then create a second list called <span class="code-inline">cooldown</span> with <strong>2 stretches</strong> (e.g. "planks, Leg hold").. Use <span class="code-inline">.extend()</span> to add <span class="code-inline">cooldown</span> to <span class="code-inline">workout</span>. Print the final list.</span>
+          <span class="li-marks">5 marks</span>
+        </li>
+        <li>
+          <span><strong>d)</strong> Replace the <strong>second exercise</strong> in <span class="code-inline">workout</span> with <span class="code-inline">"squats"</span>. Print the updated list.</span>
+          <span class="li-marks">2 marks</span>
+        </li>
+        <li>
+          <span><strong>e)</strong> Write an <span class="code-inline">if/else</span> to check if <span class="code-inline">"burpees"</span> is in <span class="code-inline">workout</span> and print either <span class="hl">"Burpees are in your plan!"</span> or <span class="hl">"Add burpees!"</span></span>
+          <span class="li-marks">3 marks</span>
+        </li>
+      </ul>
+
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="total-bar">
+    <span class="total-bar-label">Total Score</span>
+    <span class="total-bar-marks">_____ / 50</span>
+  </div>
+
+</main>
+
+<footer>Grade 7 Python Quiz · Fitness &amp; Health · 50 marks · 45 minutes</footer>
+
+</body>
+</html>
